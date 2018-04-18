@@ -1,8 +1,6 @@
 pragma solidity ^0.4.8;
 
-import "./LendCoin.sol";
-
-contract LenderList is LendCoin {
+contract LenderList {
 
     struct LoanIDs {
         bytes8 loanId;
@@ -20,7 +18,6 @@ contract LenderList is LendCoin {
 
     function addLender(
         bytes8 _user,
-        uint256 _val,
         uint _rateOfInterest,
         bytes8 _loanId
     ) returns (
@@ -30,7 +27,7 @@ contract LenderList is LendCoin {
         currentLoan.loanId = _loanId;
         loanROI[_loanId] = _rateOfInterest;
         LoanOwners[_loanId] = _user;
-        addCoin(_val, _user,_loanId);
+        // addCoin(_val, _user,_loanId);
         ListOfLoans.push(currentLoan);
         return true;
     }
@@ -38,12 +35,11 @@ contract LenderList is LendCoin {
     function getAllLenderList() constant returns (
         bytes8[],
         bytes8[],
-        uint256[],
         uint[]) 
         {
             len = ListOfLoans.length;
             bytes8[] memory userList = new bytes8[](len);
-            uint256[] memory amounts = new uint256[](len);
+            // uint256[] memory amounts = new uint256[](len);
             uint[] memory interestRates = new uint[](len);
             bytes8[] memory loanids = new bytes8[](len);
             // for (i = 0; i < len; i++) {
@@ -68,31 +64,31 @@ contract LenderList is LendCoin {
                 bytes8 _loanId = currentLoan.loanId;
                 userList[i] = LoanOwners[_loanId];
                 interestRates[i] = loanROI[_loanId];
-                amounts[i] = getBalance(userList[i], _loanId);
+                // amounts[i] = getBalance(userList[i], _loanId);
                 loanids[i] = _loanId;
             }
 
-            return (loanids,userList,amounts,interestRates);
+            return (loanids,userList,interestRates);
     }
 
-    function getLenderDetails(
-        bytes8 _user
-        ) constant returns (
-            bytes8[],
-            uint256[],
-            uint[]
-        ) {
-            len = getUserLendIds(_user).length;
-            bytes8[] memory loanids = getUserLendIds(_user);
-            uint256[] memory amounts = new uint256[](len);
-            uint[] memory interestRates = new uint[](len);
+    // function getLenderDetails(
+    //     bytes8 _user
+    //     ) constant returns (
+    //         bytes8[],
+    //         uint256[],
+    //         uint[]
+    //     ) {
+    //         len = getUserLendIds(_user).length;
+    //         bytes8[] memory loanids = getUserLendIds(_user);
+    //         uint256[] memory amounts = new uint256[](len);
+    //         uint[] memory interestRates = new uint[](len);
 
-            for ( i = 0; i < loanids.length; i++ ) {
-                bytes8 _currentLoan = loanids[i];
-                amounts[i] = getBalance(_user, _currentLoan);
-                interestRates[i] = loanROI[_currentLoan];
-            }
-            return (loanids,amounts,interestRates);
-        }
+    //         for ( i = 0; i < loanids.length; i++ ) {
+    //             bytes8 _currentLoan = loanids[i];
+    //             amounts[i] = getBalance(_user, _currentLoan);
+    //             interestRates[i] = loanROI[_currentLoan];
+    //         }
+    //         return (loanids,amounts,interestRates);
+    //     }
 
 }

@@ -1,8 +1,6 @@
 pragma solidity ^0.4.8;
 
-import "./BorrowerCoin.sol";
-
-contract BorrowerInstallments is BorrowerCoin {
+contract BorrowerInstallments {
 
     struct Installment {
         bytes8 loanId;
@@ -43,8 +41,7 @@ contract BorrowerInstallments is BorrowerCoin {
     ) returns (
         bool success
     ) {
-        uint256 eachInstallment = calculateInstallment(_amount,_roi,_tenure);
-        addBorrowerBalance(_borrower,eachInstallment);
+        // uint256 eachInstallment = calculateInstallment(_amount,_roi,_tenure);
 
         Installment memory currentInstallment;
         currentInstallment.loanId = _loanId;

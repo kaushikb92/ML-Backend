@@ -12,11 +12,11 @@ module.exports = function(deployer) {
   // deployer.deploy(CalcInsLib);
   deployer.deploy(LendCoin);
   deployer.deploy(UserRegister);
-  deployer.link(LendCoin, LenderList);
+  // deployer.link(LendCoin, LenderList);
   deployer.deploy(LenderList);
   deployer.deploy(AllTransactions);
   deployer.deploy(BorrowerCoin);
   deployer.deploy(UserRequest);
-  deployer.link(BorrowerCoin, BorrowerInstallments);
+  // deployer.link(BorrowerCoin, BorrowerInstallments);
   deployer.deploy(BorrowerInstallments);
 };
