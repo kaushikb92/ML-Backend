@@ -31,6 +31,7 @@ contract UserRequest {
     mapping(bytes8 => BorrowRequest) BorrowRequestsByUser;
     mapping(bytes8 => LendRequest) LendRequestsByUser;
     mapping(bytes8 => bool) lenderApproaveStatus;
+    mapping(bytes8 => mapping (bytes8 => uint16)) loanApproaveTS;
 
     function addRequest(
         bytes8 _lendId,
@@ -62,13 +63,17 @@ contract UserRequest {
         return true;
     }
 
-    function approaveRequest(
-        bytes8 _receiptId
+    function approaveLoanRequest(
+        bytes8 _receiptId,
+        bytes8 _loanId,
+        bytes8 _borrower,
+        uint16 _ts
         ) returns (
         bool status
         ) {
             if (!lenderApproaveStatus[_receiptId]) {
                 lenderApproaveStatus[_receiptId] = true;
+                loanApproaveTS[_loanId][_borrower] = _ts;
                 return true;
             } else {
                 return true;
@@ -92,12 +97,23 @@ contract UserRequest {
                 return (RequestsByUser[_lender][_borrower].receiptId);
         }
 
-    function getApprovalStatus(
+    function getApprovalStatusWithTS(
+            bytes8 _receiptId,
+            bytes8 _loanId,
+            bytes8 _borrower
+        ) constant returns (
+            bool _status,
+            uint256 _ts
+        ) {
+            return (lenderApproaveStatus[_receiptId], loanApproaveTS[_loanId][_borrower] );
+        }
+
+    function getApprovalStatusWithTS(
             bytes8 _receiptId
         ) constant returns (
             bool _status
         ) {
-            return lenderApproaveStatus[_receiptId];
+            return (lenderApproaveStatus[_receiptId]);
         }
 
     function getReceiptByReceptId(
