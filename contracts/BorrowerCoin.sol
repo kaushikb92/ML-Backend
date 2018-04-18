@@ -10,7 +10,7 @@ contract BorrowerCoin {
     ) returns (
         bool success
     ) {
-        if (borrowerBalance[_user] > 0){
+        if (borrowerBalance[_user] > 0) {
             borrowerBalance[_user] += _amount;
             return true;
         } else {
@@ -25,6 +25,15 @@ contract BorrowerCoin {
         uint256
     ) {
         return borrowerBalance[_user];
+    }
+
+    function withdrawBalance(
+        bytes8 _user
+    ) returns (
+        bool success
+    ) {
+        borrowerBalance[_user] = 0;
+        return true;
     }
 
 }

@@ -82,7 +82,7 @@ contract UserRequest {
 
     function getReceiptIdsForLender(
         bytes8 _lender
-        ) returns (
+        )  constant returns (
         bytes8[]
         ) {
             return (LendRequestsByUser[_lender].receiptId);
@@ -91,7 +91,7 @@ contract UserRequest {
     function getReceiptIdsForLenderAndBorrower(
         bytes8 _lender,
         bytes8 _borrower
-        ) returns (
+        ) constant returns (
         bytes8[]
         ) {
                 return (RequestsByUser[_lender][_borrower].receiptId);
@@ -140,7 +140,7 @@ contract UserRequest {
 
     function getReceiptIdsForBorrower(
         bytes8 _borrower
-        ) returns (
+        ) constant returns (
         bytes8[]
         ) {
             return (BorrowRequestsByUser[_borrower].receiptId);
